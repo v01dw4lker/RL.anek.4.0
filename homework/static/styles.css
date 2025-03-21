@@ -31,7 +31,12 @@
 body {
     color: var(--clr-light-a0); 
     background-color: var(--clr-surface-a0); 
+    background-image: url('R.png'), url('shreksophone-me-when.gif'), url('7yz5qfup.png');
+    background-position: center, top left, bottom right;
+    background-repeat: no-repeat, repeat, repeat;
+    background-size: contain, 200px, 300px;
 }
+
 .box{
     background-color: var(--clr-surface-a10);
     min-width: 450px;
