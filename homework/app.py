@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager
 import os
 
@@ -8,9 +10,17 @@ from models import db, Task, TaskFile, User
 from config import Config
 
 
+
+
 app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
+
+admin = (app, "admin", template_mode="bootstrap4")
+admin.add_view(ModelView(Task, db.session))
+admin.add_view(ModelView(TaskFile, db.session))
+admin.add_view(ModelView(User, db.session))
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -19,6 +29,11 @@ login_manager.login_view = 'login'
 
 with app.app_context():
     db.create_all()
+
+# Функція завантаження користувача
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 def allowed_file(filename):
