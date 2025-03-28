@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 
-admin = (app, "admin", template_mode="bootstrap4")
+admin = Admin(app, "admin", template_mode="bootstrap4")
 admin.add_view(ModelView(Task, db.session))
 admin.add_view(ModelView(TaskFile, db.session))
 admin.add_view(ModelView(User, db.session))
